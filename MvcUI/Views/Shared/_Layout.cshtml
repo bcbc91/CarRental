@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Car Rental</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/main.css" rel="stylesheet" />
+</head>
+
+
+<body>
+    <div class="wrapper">
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <a asp-action="Index" asp-controller="Home" class="a-navbar"><h4>Car Rental</h4></a>
+            </div>
+            <ul class="list-unstyled components">
+
+                <li class="nav-item">
+                    <a class="a-sidebar" asp-action="Index" asp-controller="Cars"> Cars</a>
+                </li>
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <li class="nav-item">
+                        <a class="a-sidebar" asp-action="Index" asp-controller="Brands"> Brands</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="a-sidebar" asp-action="Index" asp-controller="Colors"> Colors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="a-sidebar" asp-action="Index" asp-controller="Users"> Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="a-sidebar" asp-action="Index" asp-controller="Roles"> Roles</a>
+                    </li>
+
+                }
+            </ul>
+
+        </nav>
+        <div id="content">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="#" id="sidebarCollapse" class="a-navbar" title="Close Menu">
+                            <i class="fas fa-list-alt"></i>
+                            <i id="i-collapse" class="fas fa-chevron-left"></i> Menu
+                        </a>
+                    </li>
+                </ul>
+                <button class="navbar-toggler navbar-button" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon navbar-span"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            @if(User.Identity.IsAuthenticated && User.IsInRole("User")) { 
+                                <a class="a-navbar" asp-action="Index" asp-controller="Rentals">Rental</a>
+                            }
+                        </li>
+                    </ul>
+                    <div class="navbar-text">
+                        <ul class="navbar-nav mr-auto">
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item">
+                                    <a class="a-navbar" asp-action="Register" asp-controller="Accounts"> Register</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="a-navbar" asp-action="Login" asp-controller="Accounts"> Login</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <div class="div-navbar">
+                                        <span class="s-navbar"> @User.Identity.Name</span>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="a-navbar" asp-action="Logout" asp-controller="Accounts"> Logout</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="container">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/popper.js/umd/popper.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/font-awesome/js/all.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/main.js"></script>
+    @RenderSection("Scripts", required: false)
+    <partial name="_ValidationScriptsPartial" />
+</body>
+</html>
